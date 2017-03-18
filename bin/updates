@@ -1,0 +1,13 @@
+#!/bin/sh -e
+
+if [ $UID -ne 0 ]; then
+	echo "You must be root to run this command." 2>&1
+	exit 1
+fi
+
+emerge -uDNav world
+emerge --ask --depclean
+revdep-rebuild
+dispatch-conf
+eclean -d distfiles
+eclean -d packages
